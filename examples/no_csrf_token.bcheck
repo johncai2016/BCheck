@@ -1,0 +1,24 @@
+metadata:
+    language: v1-beta
+    name: "Check CSRF"
+    description: "If the original request contains CSRF token, then resend the request without CSRF token."
+    author: "John Cai"
+
+define:
+    csrf_token = "X-Csrf-Token"
+
+given request then
+  #We only care about the request which contains the CSRF token
+  if {csrf_token} in {base.request.headers} then
+    send request called no_csrf:
+        removing headers:
+            {csrf_token}
+
+    if {no_csrf.response.status_code} is "200" then
+        report issue:
+            severity: high
+            confidence: firm
+            detail: "The request still works without CSRF token."
+            remediation: "Ensure that the requst contains CSRF token."
+    end if
+  end if
