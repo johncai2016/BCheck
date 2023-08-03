@@ -1,1 +1,8 @@
+对于原始的请求，我们可以用base来引用
+常用的有:
+base.request.url:表示原来的path部分
 
+对于你构造的发送出去的请求，要用 called来定义，这样后面要用到就可以用no_csrf来引用了。
+send request called no_csrf:
+比如这里我们就要用no_csrf来表示新发出去的request/response
+if {no_csrf.response.status_code} is "200" then
