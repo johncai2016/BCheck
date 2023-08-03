@@ -1,0 +1,25 @@
+metadata:
+    language: v1-beta
+    name: "Check if CSRF tie to user's session"
+    description: "If the original request contains CSRF token, then resend the request with another user's csrf token."
+    author: "John Cai"
+
+define:
+    csrf_token = "X-Csrf-Token"
+    csrf_token_val = "Another user's csrf token"
+
+given request then
+  #We only care about the request which contains the CSRF token
+  if {csrf_token} in {base.request.headers} then
+    send request called another_csrf_token:
+        headers:
+            {csrf_token}:{csrf_token_val}
+
+    if {another_csrf_token.response.status_code} is "200" then
+        report issue:
+            severity: high
+            confidence: firm
+            detail: "The CSRF token not tied to user's session."
+            remediation: "Ensure that the requst tied to user's session."
+    end if
+  end if
