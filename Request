@@ -1,3 +1,5 @@
+
+
 对于原始的请求，我们可以用base来引用
 常用的有:
 base.request.url:表示原来的path部分
@@ -6,3 +8,5 @@ base.request.url:表示原来的path部分
 send request called no_csrf:
 比如这里我们就要用no_csrf来表示新发出去的request/response
 if {no_csrf.response.status_code} is "200" then
+
+https://portswigger.net/burp/documentation/scanner/bchecks/bcheck-definition-reference#functions
