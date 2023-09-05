@@ -1,8 +1,8 @@
 metadata:
     language: v1-beta
     name: "CRLF Injection"
-    description: "Checks for CRLF Injection"
-    author: "0xGodson_"
+    description: "Checks for CRLF Injection base on the original from 0xGodson_"
+    author: "jcai"
 
 define:
   crlf_payload = `%0d%0aX-TEST-Header:%20{random_str(13)}%0d%0a`
